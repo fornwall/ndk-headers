@@ -96,14 +96,14 @@ struct utmp
 
 __BEGIN_DECLS
 
-int utmpname(const char*);
+int utmpname(const char* __path);
 void setutent(void);
 struct utmp* getutent(void);
 void endutent(void);
 
 
 #if __ANDROID_API__ >= 23
-int login_tty(int) __INTRODUCED_IN(23);
+int login_tty(int __fd) __INTRODUCED_IN(23);
 #endif /* __ANDROID_API__ >= 23 */
 
 

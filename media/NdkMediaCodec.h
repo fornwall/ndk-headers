@@ -34,13 +34,11 @@
 #include "NdkMediaError.h"
 #include "NdkMediaFormat.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+__BEGIN_DECLS
 
 struct ANativeWindow;
+typedef struct ANativeWindow ANativeWindow;
 
-#if __ANDROID_API__ >= 21
 
 struct AMediaCodec;
 typedef struct AMediaCodec AMediaCodec;
@@ -61,6 +59,8 @@ enum {
     AMEDIACODEC_INFO_OUTPUT_FORMAT_CHANGED = -2,
     AMEDIACODEC_INFO_TRY_AGAIN_LATER = -1
 };
+
+#if __ANDROID_API__ >= 21
 
 /**
  * Create codec by name. Use this if you know the exact codec you want to use.
@@ -149,6 +149,7 @@ ssize_t AMediaCodec_dequeueInputBuffer(AMediaCodec*, int64_t timeoutUs);
 
 #if (defined(__cplusplus) && __cplusplus >= 201103L) || \
     __STDC_VERSION__ >= 201112L
+#include <assert.h>
 static_assert(sizeof(_off_t_compat) == sizeof(long),
               "_off_t_compat does not match the NDK ABI. See "
               "https://github.com/android-ndk/ndk/issues/459.");
@@ -207,6 +208,8 @@ media_status_t AMediaCodec_setOutputSurface(AMediaCodec*, ANativeWindow* surface
  */
 media_status_t AMediaCodec_releaseOutputBufferAtTime(
         AMediaCodec *mData, size_t idx, int64_t timestampNs);
+
+#if __ANDROID_API__ >= 26
 
 /**
  * Creates a Surface that can be used as the input to encoder, in place of input buffers
@@ -278,7 +281,7 @@ media_status_t AMediaCodec_setParameters(
  */
 media_status_t AMediaCodec_signalEndOfInputStream(AMediaCodec *mData);
 
-
+#endif /* __ANDROID_API__ >= 26 */
 
 typedef enum {
     AMEDIACODECRYPTOINFO_MODE_CLEAR = 0,
@@ -360,8 +363,6 @@ media_status_t AMediaCodecCryptoInfo_getEncryptedBytes(AMediaCodecCryptoInfo*, s
 
 #endif /* __ANDROID_API__ >= 21 */
 
-#ifdef __cplusplus
-} // extern "C"
-#endif
+__END_DECLS
 
 #endif //_NDK_MEDIA_CODEC_H

@@ -44,10 +44,10 @@ typedef unsigned long shmatt_t;
 
 
 #if __ANDROID_API__ >= 26
-void* shmat(int, const void*, int) __INTRODUCED_IN(26);
-int shmctl(int, int, struct shmid_ds*) __INTRODUCED_IN(26);
-int shmdt(const void*) __INTRODUCED_IN(26);
-int shmget(key_t, size_t, int) __INTRODUCED_IN(26);
+void* shmat(int __shm_id, const void* __addr, int __flags) __INTRODUCED_IN(26);
+int shmctl(int __shm_id, int __cmd, struct shmid_ds* __buf) __INTRODUCED_IN(26);
+int shmdt(const void* __addr) __INTRODUCED_IN(26);
+int shmget(key_t __key, size_t __size, int __flags) __INTRODUCED_IN(26);
 #endif /* __ANDROID_API__ >= 26 */
 
 
